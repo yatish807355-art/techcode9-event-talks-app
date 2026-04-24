@@ -1,0 +1,19 @@
+# Build artifacts
+index.html
+
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+
+# Gemini CLI internal files
+.gemini/

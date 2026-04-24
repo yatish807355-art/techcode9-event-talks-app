@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Schedule</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --talk-border: #2563eb;
+            --break-bg: #f1f5f9;
+            --transition-bg: #fdf2f8;
+            --transition-text: #db2777;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        #categorySearch {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        #categorySearch:focus {
+            border-color: var(--primary-color);
+        }
+
+        .schedule {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .item.talk {
+            border-left: 6px solid var(--talk-border);
+        }
+
+        .item.break {
+            background-color: var(--break-bg);
+            border-left: 6px solid var(--secondary-color);
+        }
+
+        .item.transition {
+            background-color: var(--transition-bg);
+            padding: 12px 24px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--transition-text);
+            border: 1px dashed var(--transition-text);
+        }
+
+        .time {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .item.break .time {
+            color: var(--secondary-color);
+        }
+
+        .title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+        }
+
+        .speakers {
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .category {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="eventTitle">Event Schedule</h1>
+            <p>Welcome to our technical day! Search by category below.</p>
+        </header>
+
+        <div class="search-container">
+            <input type="text" id="categorySearch" placeholder="Filter by category (e.g. Backend, AI, Security)...">
+        </div>
+
+        <div id="scheduleList" class="schedule">
+            <!-- Items will be rendered here -->
+        </div>
+
+        <div id="noResults" class="no-results hidden">
+            No talks found for this category.
+        </div>
+    </div>
+
+    <script>
+        const data = <!-- SCHEDULE_DATA -->;
+
+        const scheduleList = document.getElementById('scheduleList');
+        const eventTitle = document.getElementById('eventTitle');
+        const categorySearch = document.getElementById('categorySearch');
+        const noResults = document.getElementById('noResults');
+
+        function init() {
+            eventTitle.textContent = data.event;
+            renderSchedule(data.schedule);
+
+            categorySearch.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                filterSchedule(searchTerm);
+            });
+        }
+
+        function renderSchedule(items) {
+            scheduleList.innerHTML = '';
+            items.forEach((item, index) => {
+                const itemEl = document.createElement('div');
+                itemEl.className = `item ${item.type}`;
+                itemEl.dataset.index = index;
+
+                if (item.type === 'talk') {
+                    itemEl.innerHTML = `
+                        <span class="time">${item.time} (${item.duration})</span>
+                        <h2 class="title">${item.title}</h2>
+                        <div class="speakers">Speakers: ${item.speakers.join(', ')}</div>
+                        <div class="categories">
+                            ${item.categories.map(cat => `<span class="category">${cat}</span>`).join('')}
+                        </div>
+                        <p class="description">${item.description}</p>
+                    `;
+                } else if (item.type === 'break' || item.type === 'transition') {
+                    itemEl.innerHTML = `
+                        <span class="time">${item.time}</span>
+                        <h2 class="title" style="font-size: 1.1rem; margin:0;">${item.title}</h2>
+                    `;
+                }
+
+                scheduleList.appendChild(itemEl);
+            });
+        }
+
+        function filterSchedule(searchTerm) {
+            let visibleCount = 0;
+            const items = document.querySelectorAll('.item');
+            
+            data.schedule.forEach((item, index) => {
+                const itemEl = items[index];
+                
+                if (item.type !== 'talk') {
+                    // Always show breaks and transitions? 
+                    // Or hide them if the talks around them are hidden?
+                    // Let's hide transitions/breaks if there's a search term, 
+                    // unless they somehow match (which they won't).
+                    if (searchTerm === '') {
+                        itemEl.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        itemEl.classList.add('hidden');
+                    }
+                    return;
+                }
+
+                const matches = item.categories.some(cat => cat.toLowerCase().includes(searchTerm)) ||
+                                item.title.toLowerCase().includes(searchTerm) ||
+                                item.description.toLowerCase().includes(searchTerm);
+
+                if (matches) {
+                    itemEl.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    itemEl.classList.add('hidden');
+                }
+            });
+
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>

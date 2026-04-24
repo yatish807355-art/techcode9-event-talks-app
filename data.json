@@ -1,0 +1,84 @@
+{
+  "event": "TechSummit 2026",
+  "schedule": [
+    {
+      "time": "10:00 AM - 11:00 AM",
+      "type": "talk",
+      "title": "Scaling Distributed Systems",
+      "speakers": ["Alice Johnson"],
+      "categories": ["Backend", "Cloud"],
+      "duration": "1 hour",
+      "description": "Learn the patterns and anti-patterns for scaling high-traffic distributed systems in the cloud."
+    },
+    {
+      "time": "11:00 AM - 11:10 AM",
+      "type": "transition",
+      "title": "Transition Break"
+    },
+    {
+      "time": "11:10 AM - 12:10 PM",
+      "type": "talk",
+      "title": "Modern Frontend with WebAssembly",
+      "speakers": ["Bob Smith", "Charlie Davis"],
+      "categories": ["Frontend", "Performance", "WebAssembly"],
+      "duration": "1 hour",
+      "description": "Exploring how WebAssembly is changing the landscape of high-performance web applications."
+    },
+    {
+      "time": "12:10 PM - 12:20 PM",
+      "type": "transition",
+      "title": "Transition Break"
+    },
+    {
+      "time": "12:20 PM - 1:20 PM",
+      "type": "talk",
+      "title": "AI-Driven Cybersecurity",
+      "speakers": ["Diana Prince"],
+      "categories": ["Security", "AI"],
+      "duration": "1 hour",
+      "description": "How machine learning models are being used to detect and prevent zero-day attacks in real-time."
+    },
+    {
+      "time": "1:20 PM - 2:20 PM",
+      "type": "break",
+      "title": "Lunch Break"
+    },
+    {
+      "time": "2:20 PM - 3:20 PM",
+      "type": "talk",
+      "title": "The Future of Quantum Computing",
+      "speakers": ["Edward Norton", "Fiona Glenanne"],
+      "categories": ["Quantum", "Future Tech"],
+      "duration": "1 hour",
+      "description": "An overview of the current state of quantum computing and what to expect in the next decade."
+    },
+    {
+      "time": "3:20 PM - 3:30 PM",
+      "type": "transition",
+      "title": "Transition Break"
+    },
+    {
+      "time": "3:30 PM - 4:30 PM",
+      "type": "talk",
+      "title": "Data Privacy in the Age of Big Data",
+      "speakers": ["George Miller"],
+      "categories": ["Data", "Privacy"],
+      "duration": "1 hour",
+      "description": "Understanding the ethical and legal implications of data collection and how to protect user privacy."
+    },
+    {
+      "time": "4:30 PM - 4:40 PM",
+      "type": "transition",
+      "title": "Transition Break"
+    },
+    {
+      "time": "4:40 PM - 5:40 PM",
+      "type": "talk",
+      "title": "DevOps Revolution: GitOps and Beyond",
+      "speakers": ["Hannah Abbott"],
+      "categories": ["DevOps", "Automation"],
+      "duration": "1 hour",
+      "description": "A deep dive into GitOps workflows and the next generation of CI/CD automation."
+    }
+  ]
+}
